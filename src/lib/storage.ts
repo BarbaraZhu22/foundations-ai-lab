@@ -81,9 +81,11 @@ export function writeStore(store: Store) {
   listeners.forEach((listener) => listener());
 }
 
-export function subscribeStore(listener: () => void) {
+export function subscribeStore(listener: () => void): () => void {
   listeners.add(listener);
-  return () => listeners.delete(listener);
+  return () => {
+    listeners.delete(listener);
+  };
 }
 
 export function useStore() {
